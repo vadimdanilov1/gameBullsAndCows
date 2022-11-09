@@ -3,8 +3,12 @@ package ru.mail.vsdanilov;
 import java.util.Scanner;
 
 public class UserNumber {
-    Scanner scanner = new Scanner(System.in);
-    private String userStr = scanner.nextLine();
+    Scanner scanner;
+    private String userStr;
+
+    public UserNumber(String userStr) {
+        this.userStr = userStr;
+    }
 
     public String getUserStr() {
         return userStr;
@@ -21,6 +25,7 @@ public class UserNumber {
             } catch (Exception e) {
                 System.out.println("ВНИМАНИЕ! " + e.getMessage());
             }
+            scanner = new Scanner(System.in);
             userStr = scanner.nextLine();
         }
     }
