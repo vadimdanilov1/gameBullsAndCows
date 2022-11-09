@@ -1,12 +1,15 @@
 package ru.mail.vsdanilov;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static java.lang.Integer.parseInt;
 
 public class GameLog {
 
@@ -18,14 +21,21 @@ public class GameLog {
     }
 
     public int returnGameCount() throws IOException {
-        try (FileReader gameFileReader = new FileReader("gameLog.log")) {
-            Scanner scanner = new Scanner(gameFileReader);
-            return (int) scanner.findAll("Game №").count();
+        try (FileReader reader = new FileReader("gameLog.log")) {
+
+            Pattern pattern = Pattern.compile("Game №(\\d+)");
+            List<String> list = Files.readAllLines(Path.of("gameLog.log"));
+            for (String string : list) {
+                Matcher matcher = pattern.matcher(string);
+                if (matcher.find()) {
+                    gameCount = parseInt(matcher.group(1));
+                }
+            }
+            return gameCount + 1;
         } catch (FileNotFoundException e) {
             System.err.println("Файл \"gameLog.log\" не найден. Создаём новый файл.");
-            return 0;
+            return 1;
         }
-
     }
 
     public void writeStart(String strGen) throws IOException {
