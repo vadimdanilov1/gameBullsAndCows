@@ -1,0 +1,42 @@
+package ru.mail.vsdanilov;
+
+public class PrintBullsAndCows {
+
+    private final int cows;
+    private final int bulls;
+
+    public PrintBullsAndCows(int cows, int bulls) {
+        this.cows = cows;
+        this.bulls = bulls;
+    }
+
+    public void printBullsAndCows() {
+
+        StringBuilder notice = new StringBuilder();
+
+        switch (cows) {
+            case 0:
+                notice.append(cows).append(" Коров ");
+                break;
+            case 1:
+                notice.append(cows).append(" Корова ");
+                break;
+            default:
+                notice.append(cows).append(" Коровы ");
+                break;
+        }
+        switch (bulls) {
+            case 0:
+                notice.append(bulls).append(" Быков");
+                break;
+            case 1:
+                notice.append(bulls).append(" Бык");
+                break;
+            default:
+                notice.append(bulls).append(" Быка");
+                break;
+        }
+
+        System.out.println(notice);
+    }
+}
