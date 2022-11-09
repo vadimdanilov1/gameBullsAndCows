@@ -5,7 +5,17 @@ import java.util.Scanner;
 
 public class Game {
 
-    public void startGame(int attemptCount, int gameCount, boolean tryAgain) throws IOException {
+    int gameCount;
+    int attemptCount;
+    boolean tryAgain;
+
+    public Game(int gameCount, int attemptCount, boolean tryAgain) {
+        this.gameCount = gameCount;
+        this.attemptCount = attemptCount;
+        this.tryAgain = tryAgain;
+    }
+
+    public void startGame() throws IOException {
 
         System.out.println("Игра \u00ABБыки-Коровы\u00BB началась! Число из 4 разных цифр загадано.");
         Scanner scanner = new Scanner(System.in);
