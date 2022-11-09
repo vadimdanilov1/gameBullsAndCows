@@ -5,19 +5,13 @@ import java.util.Scanner;
 
 public class Game {
 
-    public void startGame() throws IOException {
+    public void startGame(int attemptCount, int gameCount, boolean tryAgain) throws IOException {
 
         System.out.println("Игра \u00ABБыки-Коровы\u00BB началась! Число из 4 разных цифр загадано.");
         Scanner scanner = new Scanner(System.in);
 
         Generator generator = new Generator();
-
-        boolean tryAgain = true;
-
-        GameLog gameLog = new GameLog();
-        int gameCount = gameLog.returnGameCount();
-        int attemptCount = 0;
-
+        GameLog gameLog;
 
         while (tryAgain) {
 
@@ -27,7 +21,9 @@ public class Game {
             String genStr = generator.getGenNumber();
             System.out.println(genStr);
 
-            gameCount++;
+            gameLog = new GameLog();
+            gameCount = gameLog.returnGameCount();
+
             gameLog.setGameCount(gameCount);
             gameLog.writeStart(genStr);
 
@@ -40,12 +36,13 @@ public class Game {
             while (true) {
                 attemptCount++;
 
-                UserNumber userNumber = new UserNumber();
+                UserNumber userNumber = new UserNumber(scanner.nextLine());
                 userNumber.checkNumber();
                 String userStr = userNumber.getUserStr();
 
                 counter.countBullsAndCows(userStr, genStr);
-                counter.printBullsAndCows();
+                PrintBullsAndCows printBullsAndCows = new PrintBullsAndCows(counter.getCows(), counter.getBulls());
+                printBullsAndCows.printBullsAndCows();
 
                 gameLog.writeAttempt(userStr, counter.getBulls(), counter.getCows());
 
